@@ -1,0 +1,6 @@
+gopkg.in/dnaeon/go-deque.v1 v1.0.0-20220926101334-c8c1a1f04894 h1:gxr0TTjgWxerNh7DywoDIAceteSUGYkRF5mtE/kr5xE=
+gopkg.in/dnaeon/go-deque.v1 v1.0.0-20220926101334-c8c1a1f04894/go.mod h1:/oUlvC7v/6StKZYUKPFtH7YbgkLITXvh4CMF7cElPo8=
+gopkg.in/dnaeon/go-graph.v1 v1.0.1 h1:Bgnknvuzqypgv/q7URRFxcLs7jX81uExFJKcfSARlMg=
+gopkg.in/dnaeon/go-graph.v1 v1.0.1/go.mod h1:tex4sClma3uVG+1izmSbgQILRr6gz8vmCkDnqlEudWI=
+gopkg.in/dnaeon/go-priorityqueue.v1 v1.1.0 h1:M3Iklm4HCkayoneDcKK9NZgtjGQHBWPA0MF30eNewVA=
+gopkg.in/dnaeon/go-priorityqueue.v1 v1.1.0/go.mod h1:JNUtwj2QQsBHhsIHNjxdDaSmLW4RZtvJHO8VYtsMkY4=
