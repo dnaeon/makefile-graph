@@ -97,9 +97,15 @@ func (p *Parser) Parse(r io.Reader) (graph.Graph[string], error) {
 		}
 	}
 
+	if err := scanner.Err(); err != nil {
+		return nil, err
+	}
+
 	return g, nil
 }
 
+// parseVertices parses a single line, which represents a GNU Make target with
+// it's prerequisites.
 func (p *Parser) parseVertices(g graph.Graph[string], line string) error {
 	// A typical target with pre-requisites looks like this
 	//
