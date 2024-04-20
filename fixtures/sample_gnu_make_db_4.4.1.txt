@@ -1,0 +1,396 @@
+mkdir -p /Users/dnaeon/workspace/Projects/golang/src/github.com/dnaeon/makefile-graph/bin
+go build -o /Users/dnaeon/workspace/Projects/golang/src/github.com/dnaeon/makefile-graph/bin/makefile-graph cmd/main.go
+# GNU Make 4.4.1
+# Built for aarch64-apple-darwin23.0.0
+# Copyright (C) 1988-2023 Free Software Foundation, Inc.
+# License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>
+# This is free software: you are free to change and redistribute it.
+# There is NO WARRANTY, to the extent permitted by law.
+
+# Make data base, printed on Sat Apr 20 14:59:39 2024
+
+# Variables
+
+# default
+PREPROCESS.S = $(CPP) $(CPPFLAGS)
+# environment
+GO111MODULE = on
+# default
+COMPILE.m = $(OBJC) $(OBJCFLAGS) $(CPPFLAGS) $(TARGET_ARCH) -c
+# default
+ARFLAGS = -rv
+# default
+AS = as
+# default
+AR = ar
+# default
+OBJC = cc
+# environment
+XPC_SERVICE_NAME = 0
+# default
+LINK.S = $(CC) $(ASFLAGS) $(CPPFLAGS) $(LDFLAGS) $(TARGET_MACH)
+# default
+LINK.s = $(CC) $(ASFLAGS) $(LDFLAGS) $(TARGET_MACH)
+# default
+MAKE_COMMAND := gmake
+# automatic
+@D = $(patsubst %/,%,$(dir $@))
+# default
+COFLAGS = 
+# default
+COMPILE.mod = $(M2C) $(M2FLAGS) $(MODFLAGS) $(TARGET_ARCH)
+# makefile (from 'Makefile', line 3)
+BINARY = $(LOCAL_BIN)/makefile-graph
+# default
+.VARIABLES := 
+# environment
+COMMAND_MODE = unix2003
+# automatic
+%D = $(patsubst %/,%,$(dir $%))
+# default
+LINK.o = $(CC) $(LDFLAGS) $(TARGET_ARCH)
+# default
+TEXI2DVI = texi2dvi
+# automatic
+^D = $(patsubst %/,%,$(dir $^))
+# automatic
+%F = $(notdir $%)
+# default
+LEX.l = $(LEX) $(LFLAGS) -t
+# environment
+LANG = en_US.UTF-8
+# default
+.LOADED := 
+# environment
+COLORFGBG = 12;8
+# environment
+__CF_USER_TEXT_ENCODING = 0x0:0:0
+# default
+COMPILE.c = $(CC) $(CFLAGS) $(CPPFLAGS) $(TARGET_ARCH) -c
+# makefile
+MAKEFLAGS = Bnpr
+# default
+LINK.f = $(FC) $(FFLAGS) $(LDFLAGS) $(TARGET_ARCH)
+# default
+TANGLE = tangle
+# default
+PREPROCESS.F = $(FC) $(FFLAGS) $(CPPFLAGS) $(TARGET_ARCH) -F
+# automatic
+*D = $(patsubst %/,%,$(dir $*))
+# environment
+MFLAGS = -Bnpr
+# default
+.SHELLFLAGS := -c
+# default
+M2C = m2c
+# default
+COMPILE.p = $(PC) $(PFLAGS) $(CPPFLAGS) $(TARGET_ARCH) -c
+# default
+COMPILE.cpp = $(COMPILE.cc)
+# default
+TEX = tex
+# automatic
++D = $(patsubst %/,%,$(dir $+))
+# makefile (from 'Makefile', line 1)
+MAKEFILE_LIST := Makefile
+# default
+F77FLAGS = $(FFLAGS)
+# automatic
+@F = $(notdir $@)
+# automatic
+?D = $(patsubst %/,%,$(dir $?))
+# default
+COMPILE.def = $(M2C) $(M2FLAGS) $(DEFFLAGS) $(TARGET_ARCH)
+# default
+CTANGLE = ctangle
+# automatic
+*F = $(notdir $*)
+# automatic
+<D = $(patsubst %/,%,$(dir $<))
+# environment
+ITERM_PROFILE = Default
+# default
+COMPILE.C = $(COMPILE.cc)
+# default
+YACC.m = $(YACC) $(YFLAGS)
+# default
+LINK.C = $(LINK.cc)
+# default
+MAKE_HOST := aarch64-apple-darwin23.0.0
+# default
+LINK.c = $(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(TARGET_ARCH)
+# makefile
+SHELL = /bin/sh
+# default
+LINK.F = $(FC) $(FFLAGS) $(CPPFLAGS) $(LDFLAGS) $(TARGET_ARCH)
+# environment
+SHLVL = 2
+# environment
+MAKELEVEL := 0
+# default
+MAKE = $(MAKE_COMMAND)
+# default
+FC = f77
+# default
+LINT = lint
+# default
+PC = pc
+# default
+MAKEFILES := 
+# automatic
+^F = $(notdir $^)
+# default
+LEX.m = $(LEX) $(LFLAGS) -t
+# default
+.LIBPATTERNS = lib%.dylib lib%.a
+# default
+CPP = $(CC) -E
+# default
+LINK.cc = $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(LDFLAGS) $(TARGET_ARCH)
+# default
+CHECKOUT,v = +$(if $(wildcard $@),,$(CO) $(COFLAGS) $< $@)
+# default
+COMPILE.f = $(FC) $(FFLAGS) $(TARGET_ARCH) -c
+# default
+COMPILE.r = $(FC) $(FFLAGS) $(RFLAGS) $(TARGET_ARCH) -c
+# default
+COMPILE.S = $(CC) $(ASFLAGS) $(CPPFLAGS) $(TARGET_MACH) -c
+# automatic
+?F = $(notdir $?)
+# default
+GET = get
+# default
+LINK.r = $(FC) $(FFLAGS) $(RFLAGS) $(LDFLAGS) $(TARGET_ARCH)
+# automatic
++F = $(notdir $+)
+# default
+MAKEINFO = makeinfo
+# 'override' directive
+GNUMAKEFLAGS := 
+# default
+PREPROCESS.r = $(FC) $(FFLAGS) $(RFLAGS) $(TARGET_ARCH) -F
+# default
+LINK.m = $(OBJC) $(OBJCFLAGS) $(CPPFLAGS) $(LDFLAGS) $(TARGET_ARCH)
+# environment
+LOGNAME = dnaeon
+# default
+LINK.p = $(PC) $(PFLAGS) $(CPPFLAGS) $(LDFLAGS) $(TARGET_ARCH)
+# default
+YACC = yacc
+# environment
+XPC_FLAGS = 0x0
+# makefile (from 'Makefile', line 1)
+.DEFAULT_GOAL := build
+# default
+RM = rm -f
+# environment
+SAVEHIST = 1000
+# default
+WEAVE = weave
+# environment
+EDITOR = emacsclient
+# environment
+USER = dnaeon
+# default
+MAKE_VERSION := 4.4.1
+# 'override' directive
+.SHELLSTATUS := 0
+# default
+F77 = $(FC)
+# default
+CWEAVE = cweave
+# default
+YACC.y = $(YACC) $(YFLAGS)
+# default
+LINK.cpp = $(LINK.cc)
+# default
+CO = co
+# environment
+COLORTERM = truecolor
+# environment
+LC_CTYPE = UTF-8
+# default
+OUTPUT_OPTION = -o $@
+# default
+COMPILE.s = $(AS) $(ASFLAGS) $(TARGET_MACH)
+# default
+MAKE_TERMERR := /dev/ttys002
+# environment
+HOME = /Users/dnaeon
+# default
+LEX = lex
+# environment
+TERM = tmux-256color
+# default
+LINT.c = $(LINT) $(LINTFLAGS) $(CPPFLAGS) $(TARGET_ARCH)
+# default
+COMPILE.F = $(FC) $(FFLAGS) $(CPPFLAGS) $(TARGET_ARCH) -c
+# default
+.RECIPEPREFIX := 
+# automatic
+<F = $(notdir $<)
+# default
+SUFFIXES := 
+# default
+LD = ld
+# default
+.FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs notintermediate shell-export archives jobserver jobserver-fifo output-sync check-symlink load
+# default
+CXX = clang++
+# default
+CC = cc
+# makefile (from 'Makefile', line 2)
+LOCAL_BIN = $(shell pwd)/bin
+# default
+COMPILE.cc = $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(TARGET_ARCH) -c
+# variable set hash-table stats:
+# Load=145/1024=14%, Rehash=0, Collisions=14/211=7%
+
+# Pattern-specific Variable Values
+
+# No pattern-specific variable values.
+
+# Directories
+
+# . (device 16777231, inode 7066412): 14 files, no impossibilities.
+
+# 14 files, no impossibilities in 1 directories.
+
+# Implicit Rules
+
+# No implicit rules.
+
+# Files
+
+# 'override' directive
+/Users/dnaeon/workspace/Projects/golang/src/github.com/dnaeon/makefile-graph/bin: .SHELLSTATUS := 0
+/Users/dnaeon/workspace/Projects/golang/src/github.com/dnaeon/makefile-graph/bin:
+#  Implicit rule search has not been done.
+#  Implicit/static pattern stem: ''
+#  Last modified 2514-05-30 04:53:03.107374182
+#  File has been updated.
+#  Successfully updated.
+# automatic
+# @ := /Users/dnaeon/workspace/Projects/golang/src/github.com/dnaeon/makefile-graph/bin
+# automatic
+# * := 
+# automatic
+# < := 
+# automatic
+# + := 
+# automatic
+# % := 
+# automatic
+# ^ := 
+# automatic
+# ? := 
+# automatic
+# | := 
+# variable set hash-table stats:
+# Load=9/32=28%, Rehash=0, Collisions=1/16=6%
+#  recipe to execute (from 'Makefile', line 6):
+	mkdir -p $(LOCAL_BIN)
+
+# Not a target:
+Makefile:
+#  Implicit rule search has been done.
+#  File is secondary (prerequisite of .SECONDARY).
+#  Last modified 2024-04-19 15:25:48.106252418
+#  File has been updated.
+#  Successfully updated.
+
+test-cover:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 20):
+	go test -v -race -coverprofile=coverage.txt -covermode=atomic $(shell go list ./... | grep -v cmd)
+
+# 'override' directive
+/Users/dnaeon/workspace/Projects/golang/src/github.com/dnaeon/makefile-graph/bin/makefile-graph: .SHELLSTATUS := 0
+/Users/dnaeon/workspace/Projects/golang/src/github.com/dnaeon/makefile-graph/bin/makefile-graph: /Users/dnaeon/workspace/Projects/golang/src/github.com/dnaeon/makefile-graph/bin
+#  Implicit rule search has not been done.
+#  Implicit/static pattern stem: ''
+#  Last modified 2514-05-30 04:53:03.107374182
+#  File has been updated.
+#  Successfully updated.
+# automatic
+# @ := /Users/dnaeon/workspace/Projects/golang/src/github.com/dnaeon/makefile-graph/bin/makefile-graph
+# automatic
+# * := 
+# automatic
+# < := /Users/dnaeon/workspace/Projects/golang/src/github.com/dnaeon/makefile-graph/bin
+# automatic
+# + := /Users/dnaeon/workspace/Projects/golang/src/github.com/dnaeon/makefile-graph/bin
+# automatic
+# % := 
+# automatic
+# ^ := /Users/dnaeon/workspace/Projects/golang/src/github.com/dnaeon/makefile-graph/bin
+# automatic
+# ? := /Users/dnaeon/workspace/Projects/golang/src/github.com/dnaeon/makefile-graph/bin
+# automatic
+# | := 
+# variable set hash-table stats:
+# Load=9/32=28%, Rehash=0, Collisions=1/24=4%
+#  recipe to execute (from 'Makefile', line 9):
+	go build -o $(BINARY) cmd/main.go
+
+# Not a target:
+.DEFAULT:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+build: /Users/dnaeon/workspace/Projects/golang/src/github.com/dnaeon/makefile-graph/bin/makefile-graph
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/15=0%
+
+test:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 17):
+	go test -v -race $(shell go list ./... | grep -v cmd)
+
+get:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 14):
+	go get -v -t -d ./...
+
+# Not a target:
+.SUFFIXES:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+.PHONY: get test test-cover build
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# files hash-table stats:
+# Load=10/1024=1%, Rehash=0, Collisions=0/30=0%
+# VPATH Search Paths
+
+# No 'vpath' search paths.
+
+# No general ('VPATH' variable) search path.
+
+# strcache buffers: 1 (0) / strings = 24 / storage = 362 B / avg = 15 B
+# current buf: size = 8162 B / used = 362 B / count = 24 / avg = 15 B
+
+# strcache performance: lookups = 41 / hit rate = 41%
+# hash-table stats:
+# Load=24/8192=0%, Rehash=0, Collisions=0/41=0%
+# Finished Make data base on Sat Apr 20 14:59:39 2024
+
