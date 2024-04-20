@@ -14,9 +14,9 @@ get:
 	go get -v -t -d ./...
 
 test:
-	go test -v -race $(shell go list ./... | grep -v cmd)
+	go test -v -race $(shell go list ./... | grep -v -E 'cmd|fixtures')
 
 test-cover:
-	go test -v -race -coverprofile=coverage.txt -covermode=atomic $(shell go list ./... | grep -v cmd)
+	go test -v -race -coverprofile=coverage.txt -covermode=atomic $(shell go list ./... | grep -v -E 'cmd|fixtures')
 
 .PHONY: get test test-cover build
