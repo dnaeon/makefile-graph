@@ -1,2 +1,3 @@
 # Ignore Emacs backup files
 *~
+bin/
