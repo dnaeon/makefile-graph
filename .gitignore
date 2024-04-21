@@ -1,3 +1,4 @@
 # Ignore Emacs backup files
 *~
 bin/
+coverage.txt
