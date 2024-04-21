@@ -16,7 +16,7 @@ graph representing the relationships between the discovered Makefile targets.
 
 ## Installation
 
-You can install the the CLI application using one of the following ways.
+You can install the CLI application using one of the following ways.
 
 If you have cloned the repository you can build the CLI app using the provided
 Makefile target.
@@ -134,7 +134,7 @@ This is what the resulting graph looks like.
 ![Example Makefile Graph Related Only](./images/image-3.svg)
 
 The `--direction` option is used for specifying the [direction of graph
-layout](https://graphviz.org/docs/attrs/rankdir/). You can set it `TB`, `BT`,
+layout](https://graphviz.org/docs/attrs/rankdir/). You can set it to `TB`, `BT`,
 `LR` or `RL`.
 
 The `--format` option is used for specifying the output format for the graph. By
@@ -176,6 +176,13 @@ Run test coverage.
 ``` shell
 make test-cover
 ```
+
+## Contributing
+
+`makefile-graph` is hosted on
+[Github](https://pkg.go.dev/github.com/dnaeon/makefile-graph). Please contribute
+by reporting issues, suggesting features or by sending patches using pull
+requests.
 
 ## License
 
