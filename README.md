@@ -81,14 +81,14 @@ representation](https://graphviz.org/doc/info/lang.html) for the Makefile
 targets and their dependencies from our example Makefile.
 
 ``` shell
-makefile-graph --makefile examples/Makefile --direction LR
+makefile-graph --makefile examples/Makefile --direction TB
 ```
 
 In order to render the graph you can pipe it directly to the
 [dot command](https://graphviz.org/doc/info/command.html), e.g.
 
 ``` makefile
-makefile-graph --makefile examples/Makefile --direction LR | dot -Tsvg -o graph.svg
+makefile-graph --makefile examples/Makefile --direction TB | dot -Tsvg -o graph.svg
 ```
 
 This is what the graph looks like when we render it using `dot(1)`.
@@ -106,7 +106,7 @@ dependencies.
 ``` makefile
 makefile-graph \
     --makefile examples/Makefile \
-    --direction LR \
+    --direction TB \
     --target files.o \
     --highlight \
     --highlight-color lightgreen
@@ -124,7 +124,7 @@ dependencies.
 ``` makefile
 makefile-graph \
     --makefile examples/Makefile \
-    --direction LR \
+    --direction TB \
     --target files.o \
     --related-only
 ```
