@@ -31,7 +31,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/dnaeon/makefile-graph/fixtures"
+	"github.com/dnaeon/makefile-graph/pkg/fixtures"
 	"gopkg.in/dnaeon/go-graph.v1"
 )
 
