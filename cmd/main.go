@@ -195,10 +195,26 @@ func dumpMakeDb(file string) (io.Reader, error) {
 		"--no-builtin-variables",
 		"--dry-run",
 		"--always-make",
+		"--question",
 	}
+
 	output, err := exec.Command("make", args...).Output()
 	if err != nil {
-		return nil, err
+		if exiterr, ok := err.(*exec.ExitError); ok {
+			// We ignore exit code 1 and 2 here. Exit code 1 will be
+			// returned when a target is not up-to-date and usually
+			// exit code 2 is returned when a pre-requisite file is
+			// missing.  In both cases we can ignore the exit codes,
+			// since we are interested in dumping the internal db
+			// only.
+			exitCode := exiterr.ExitCode()
+			if exitCode != 1 && exitCode != 2 {
+				return nil, err
+			}
+		} else {
+			// Some other error occurred, bubble it up
+			return nil, err
+		}
 	}
 
 	r := strings.NewReader(string(output))
