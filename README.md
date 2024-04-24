@@ -27,10 +27,10 @@ make build
 
 The resulting binary will be located in `bin/makefile-graph`.
 
-Install the CLI application using `go build`.
+Install the CLI application using `go install`.
 
 ``` shell
-go build -o $(go env GOBIN)/makefile-graph github.com/dnaeon/makefile-graph/cmd
+go install github.com/dnaeon/makefile-graph/cmd/makefile-graph@latest
 ```
 
 In order to install the parser package and use it in your own Go code run the
