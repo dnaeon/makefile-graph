@@ -6,7 +6,7 @@ $(LOCAL_BIN):
 	mkdir -p $(LOCAL_BIN)
 
 $(BINARY): $(LOCAL_BIN)
-	go build -o $(BINARY) cmd/main.go
+	go build -o $(BINARY) cmd/makefile-graph/main.go
 
 build: $(BINARY)
 
