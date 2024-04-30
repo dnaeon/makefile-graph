@@ -198,7 +198,13 @@ func dumpMakeDb(file string) (io.Reader, error) {
 		"--question",
 	}
 
-	output, err := exec.Command("make", args...).Output()
+	env := []string{
+		"LC_ALL=C",
+	}
+
+	cmd := exec.Command("make", args...)
+	cmd.Env = env
+	output, err := cmd.Output()
 	if err != nil {
 		if exiterr, ok := err.(*exec.ExitError); ok {
 			// We ignore exit code 1 and 2 here. Exit code 1 will be
