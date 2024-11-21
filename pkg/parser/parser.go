@@ -129,7 +129,7 @@ func (p *Parser) parseVertices(g graph.Graph[string], line string) error {
 
 		for _, v := range strings.Split(toItems, " ") {
 			v = strings.TrimSpace(v)
-			if v == "" {
+			if v == "" || v == "|" {
 				continue
 			}
 			g.AddVertex(v)

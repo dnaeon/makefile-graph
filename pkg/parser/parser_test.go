@@ -98,6 +98,9 @@ func TestParseVerticesLine(t *testing.T) {
 	testCases := []testCase{
 		{line: "foo:", wantErr: nil, wantVs: 1, wantEs: 0},
 		{line: "foo: bar", wantErr: nil, wantVs: 2, wantEs: 1},
+		{line: "foo: | bar", wantErr: nil, wantVs: 2, wantEs: 1},
+		{line: "foo: bar | baz", wantErr: nil, wantVs: 3, wantEs: 2},
+		{line: "foo: baz qux", wantErr: nil, wantVs: 3, wantEs: 2},
 		{line: "foo bar: baz qux", wantErr: nil, wantVs: 4, wantEs: 4},
 		{line: "foo", wantErr: ErrInvalidTarget},
 	}
