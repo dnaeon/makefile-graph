@@ -35,9 +35,12 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/dnaeon/makefile-graph/pkg/parser"
-
+	"github.com/go-echarts/go-echarts/v2/charts"
+	"github.com/go-echarts/go-echarts/v2/components"
+	"github.com/go-echarts/go-echarts/v2/opts"
 	"gopkg.in/dnaeon/go-graph.v1"
+
+	"github.com/dnaeon/makefile-graph/pkg/parser"
 )
 
 var errNoTargetName = errors.New("Must specify target name")
@@ -47,6 +50,7 @@ var errInvalidFormat = errors.New("Invalid format specified")
 const (
 	formatDot      = "dot"
 	formatTopoSort = "tsort"
+	formatEcharts  = "echarts"
 )
 
 func main() {
@@ -64,11 +68,11 @@ func main() {
 	flag.StringVar(&highlightColor, "highlight-color", "green", "color to use for highlighting")
 	flag.BoolVar(&relatedOnly, "related-only", false, "return only related vertices for a target")
 	flag.StringVar(&direction, "direction", "TB", "layout direction: TB, BT, LR or RL")
-	flag.StringVar(&format, "format", "dot", "format to use: dot or tsort")
+	flag.StringVar(&format, "format", "dot", "format to use: dot, tsort or echarts")
 	flag.Parse()
 
 	// What format to print the graph in: Dot representation or topo sort
-	formats := []string{formatDot, formatTopoSort}
+	formats := []string{formatDot, formatTopoSort, formatEcharts}
 	if !slices.Contains(formats, format) {
 		printErrAndExit(errInvalidFormat)
 	}
@@ -107,7 +111,7 @@ func main() {
 		printErrAndExit(err)
 	}
 
-	// Set layout direction
+	// Set layout direction (applicable for Dot format only)
 	attrs := g.GetDotAttributes()
 	attrs["rankdir"] = direction
 
@@ -118,7 +122,7 @@ func main() {
 		}
 	}
 
-	// Print only vertices related to the specified target
+	// Keep only vertices related to the specified target
 	if relatedOnly {
 		if err := keepRelatedVerticesOnly(g, target); err != nil {
 			printErrAndExit(err)
@@ -137,6 +141,10 @@ func main() {
 		}
 		for _, v := range collector.Get() {
 			fmt.Println(v.Value)
+		}
+	case formatEcharts:
+		if err := writeEchartsTree(g, direction, os.Stdout); err != nil {
+			printErrAndExit(err)
 		}
 	}
 }
@@ -171,8 +179,15 @@ func keepRelatedVerticesOnly(g graph.Graph[string], source string) error {
 // color.
 func highlightVertices(g graph.Graph[string], source string, color string) error {
 	walker := func(v *graph.Vertex[string]) error {
+		// Dot attributes
 		v.DotAttributes["color"] = color
 		v.DotAttributes["fillcolor"] = color
+
+		// Echarts attributes
+		v.EchartsStyle = &opts.ItemStyle{
+			Color: color,
+		}
+
 		return nil
 	}
 
@@ -226,4 +241,82 @@ func dumpMakeDb(file string) (io.Reader, error) {
 	r := strings.NewReader(string(output))
 
 	return r, nil
+}
+
+// writeEchartsTree generates a tree of the Makefile targets using echarts.
+func writeEchartsTree(g graph.Graph[string], direction string, w io.Writer) error {
+	// Build a map of the tree nodes and use it later for building the tree.
+	nodesMap := make(map[string]*opts.TreeData)
+	for _, u := range g.GetVertices() {
+		node := &opts.TreeData{
+			Name:       u.Label,
+			SymbolSize: 15,
+			ItemStyle:  u.EchartsStyle,
+		}
+		nodesMap[u.Label] = node
+	}
+
+	// Topowalk the graph and build the tree data
+	treeData := make([]*opts.TreeData, 0)
+	walker := func(u *graph.Vertex[string]) error {
+		node := nodesMap[u.Label]
+		children := make([]*opts.TreeData, 0)
+		for _, v := range g.GetNeighbourVertices(u.Value) {
+			child := nodesMap[v.Label]
+			children = append(children, child)
+		}
+		node.Children = children
+
+		// Add only top-level targets to the tree. Children nodes will
+		// already be attached to their respective parents.
+		if u.Degree.In == 0 {
+			treeData = append(treeData, node)
+		}
+
+		return nil
+	}
+	if err := graph.WalkTopoOrder(g, walker); err != nil {
+		return err
+	}
+
+	// Attach nodes to a root node.
+	root := opts.TreeData{
+		Name:     "Root",
+		Children: treeData,
+	}
+
+	tree := charts.NewTree()
+	globalOpts := []charts.GlobalOpts{
+		charts.WithInitializationOpts(
+			opts.Initialization{
+				Width:  "100%",
+				Height: "95vh",
+			},
+		),
+		charts.WithTooltipOpts(opts.Tooltip{Show: opts.Bool(true)}),
+	}
+	seriesOpts := []charts.SeriesOpts{
+		charts.WithTreeOpts(
+			opts.TreeChart{
+				Roam:              opts.Bool(true),
+				ExpandAndCollapse: opts.Bool(true),
+				SymbolKeepAspect:  opts.Bool(true),
+				Layout:            "orthogonal",
+				Orient:            direction,
+				InitialTreeDepth:  2,
+				Leaves: &opts.TreeLeaves{
+					Label: &opts.Label{Show: opts.Bool(true), Position: "top"},
+				},
+			},
+		),
+		charts.WithLabelOpts(opts.Label{Show: opts.Bool(true), Position: "top"}),
+	}
+
+	tree.SetGlobalOptions(globalOpts...)
+	tree.AddSeries("Targets", []opts.TreeData{root}).SetSeriesOptions(seriesOpts...)
+	tree.AddJSFuncStrs(`%MY_ECHARTS%.setOption({"emphasis": {"focus": "descendant"}});`)
+	page := components.NewPage()
+	page.AddCharts(tree)
+
+	return page.Render(w)
 }
