@@ -54,13 +54,8 @@ const (
 )
 
 func main() {
-	var makefile string
-	var target string
-	var relatedOnly bool
-	var highlight bool
-	var highlightColor string
-	var direction string
-	var format string
+	var relatedOnly, highlight bool
+	var makefile, target, highlightColor, direction, format, theme string
 
 	flag.StringVar(&makefile, "makefile", "Makefile", "path to Makefile")
 	flag.StringVar(&target, "target", "", "name of a target")
@@ -69,6 +64,7 @@ func main() {
 	flag.BoolVar(&relatedOnly, "related-only", false, "return only related vertices for a target")
 	flag.StringVar(&direction, "direction", "TB", "layout direction: TB, BT, LR or RL")
 	flag.StringVar(&format, "format", "dot", "format to use: dot, tsort or echarts")
+	flag.StringVar(&theme, "theme", "default", "echarts theme to use, e.g. white, dark, vintage, etc.")
 	flag.Parse()
 
 	// What format to print the graph in: Dot representation or topo sort
@@ -143,7 +139,7 @@ func main() {
 			fmt.Println(v.Value)
 		}
 	case formatEcharts:
-		if err := writeEchartsTree(g, direction, os.Stdout); err != nil {
+		if err := writeEchartsTree(g, direction, theme, os.Stdout); err != nil {
 			printErrAndExit(err)
 		}
 	}
@@ -244,7 +240,7 @@ func dumpMakeDb(file string) (io.Reader, error) {
 }
 
 // writeEchartsTree generates a tree of the Makefile targets using echarts.
-func writeEchartsTree(g graph.Graph[string], direction string, w io.Writer) error {
+func writeEchartsTree(g graph.Graph[string], direction string, theme string, w io.Writer) error {
 	// Build a map of the tree nodes and use it later for building the tree.
 	nodesMap := make(map[string]*opts.TreeData)
 	for _, u := range g.GetVertices() {
@@ -291,6 +287,7 @@ func writeEchartsTree(g graph.Graph[string], direction string, w io.Writer) erro
 			opts.Initialization{
 				Width:  "100%",
 				Height: "95vh",
+				Theme:  theme,
 			},
 		),
 		charts.WithTooltipOpts(opts.Tooltip{Show: opts.Bool(true)}),
