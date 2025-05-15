@@ -9,6 +9,8 @@
 [GNU Make](https://www.gnu.org/software/make/)'s internal database and generates a
 graph representing the relationships between the discovered Makefile targets.
 
+![echarts dark demo](./images/echarts-dark.gif)
+
 ## Requirements
 
 * [GNU Make](https://www.gnu.org/software/make/)
@@ -162,6 +164,27 @@ command.h
 files.c
 files.o
 ```
+
+The graph can also be rendered with [Apache ECharts](https://echarts.apache.org/en/index.html)
+using the [go-echarts](https://github.com/go-echarts/go-echarts) library.
+
+The following command will generate an HTML file, which renders the graph in
+Apache ECharts.
+
+``` shell
+makefile-graph \
+    --makefile examples/Makefile \
+    --direction LR \
+    --theme dark \
+    --format echarts
+```
+
+![echarts dark demo](./images/echarts-dark.gif)
+
+A different theme can be specified using the `--theme` option. This example
+renders the same graph using `--theme=white`.
+
+![echarts white demo](./images/echarts-white.gif)
 
 ## Tests
 
