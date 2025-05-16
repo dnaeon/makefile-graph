@@ -198,9 +198,12 @@ func printErrAndExit(err error) {
 
 // dumpMakeDb dumps the internal make(1) database and returns it
 func dumpMakeDb(file string) (io.Reader, error) {
+	dir := path.Clean(path.Dir(file))
 	args := []string{
 		"--makefile",
 		file,
+		"--directory",
+		dir,
 		"--print-data-base",
 		"--no-builtin-rules",
 		"--no-builtin-variables",
@@ -209,12 +212,21 @@ func dumpMakeDb(file string) (io.Reader, error) {
 		"--question",
 	}
 
-	env := []string{
-		"LC_ALL=C",
-	}
+	// Pass in the calling process environment, which might be needed when
+	// evaluating dynamic targets coming from Makefile variables calling out
+	// to shell. Also, sanitize the environment from LC_* vars and set
+	// LC_ALL=C, so that we have deterministic output of the internal
+	// database.
+	env := os.Environ()
+	sanitizedEnv := slices.DeleteFunc(env, func(item string) bool {
+		return strings.HasPrefix(item, "LC_")
+	})
+	sanitizedEnv = append(sanitizedEnv, "LC_ALL=C")
 
 	cmd := exec.Command("make", args...)
-	cmd.Env = env
+	cmd.Env = sanitizedEnv
+	cmd.Dir = dir
+
 	output, err := cmd.Output()
 	if err != nil {
 		if exiterr, ok := err.(*exec.ExitError); ok {
