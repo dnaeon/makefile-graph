@@ -1,11 +1,12 @@
 .DEFAULT_GOAL := build
 LOCAL_BIN ?= $(shell pwd)/bin
 BINARY ?= $(LOCAL_BIN)/makefile-graph
+SRC_DIRS := $(shell go list -f '{{.Dir}}' ./...)
 
 $(LOCAL_BIN):
 	mkdir -p $(LOCAL_BIN)
 
-$(BINARY): $(LOCAL_BIN)
+$(BINARY): $(SRC_DIRS) | $(LOCAL_BIN)
 	go build -o $(BINARY) cmd/makefile-graph/main.go
 
 build: $(BINARY)
