@@ -26,12 +26,14 @@
 package main
 
 import (
+	"bytes"
 	"errors"
 	"flag"
 	"fmt"
 	"io"
 	"os"
 	"os/exec"
+	"path"
 	"slices"
 	"strings"
 
@@ -139,7 +141,33 @@ func main() {
 			fmt.Println(v.Value)
 		}
 	case formatEcharts:
-		if err := writeEchartsTree(g, direction, theme, os.Stdout); err != nil {
+		globalOpts := []charts.GlobalOpts{
+			charts.WithInitializationOpts(
+				opts.Initialization{
+					Width:  "100%",
+					Height: "95vh",
+					Theme:  theme,
+				},
+			),
+			charts.WithTooltipOpts(opts.Tooltip{Show: opts.Bool(true)}),
+		}
+		seriesOpts := []charts.SeriesOpts{
+			charts.WithTreeOpts(
+				opts.TreeChart{
+					Roam:              opts.Bool(true),
+					ExpandAndCollapse: opts.Bool(true),
+					SymbolKeepAspect:  opts.Bool(true),
+					Layout:            "orthogonal",
+					Orient:            direction,
+					InitialTreeDepth:  2,
+					Leaves: &opts.TreeLeaves{
+						Label: &opts.Label{Show: opts.Bool(true), Position: "top"},
+					},
+				},
+			),
+			charts.WithLabelOpts(opts.Label{Show: opts.Bool(true), Position: "top"}),
+		}
+		if err := writeEchartsTree(g, os.Stdout, globalOpts, seriesOpts); err != nil {
 			printErrAndExit(err)
 		}
 	}
@@ -246,13 +274,13 @@ func dumpMakeDb(file string) (io.Reader, error) {
 		}
 	}
 
-	r := strings.NewReader(string(output))
+	r := bytes.NewReader(output)
 
 	return r, nil
 }
 
 // writeEchartsTree generates a tree of the Makefile targets using echarts.
-func writeEchartsTree(g graph.Graph[string], direction string, theme string, w io.Writer) error {
+func writeEchartsTree(g graph.Graph[string], w io.Writer, globalOpts []charts.GlobalOpts, seriesOpts []charts.SeriesOpts) error {
 	// Build a map of the tree nodes and use it later for building the tree.
 	nodesMap := make(map[string]*opts.TreeData)
 	for _, u := range g.GetVertices() {
@@ -294,33 +322,6 @@ func writeEchartsTree(g graph.Graph[string], direction string, theme string, w i
 	}
 
 	tree := charts.NewTree()
-	globalOpts := []charts.GlobalOpts{
-		charts.WithInitializationOpts(
-			opts.Initialization{
-				Width:  "100%",
-				Height: "95vh",
-				Theme:  theme,
-			},
-		),
-		charts.WithTooltipOpts(opts.Tooltip{Show: opts.Bool(true)}),
-	}
-	seriesOpts := []charts.SeriesOpts{
-		charts.WithTreeOpts(
-			opts.TreeChart{
-				Roam:              opts.Bool(true),
-				ExpandAndCollapse: opts.Bool(true),
-				SymbolKeepAspect:  opts.Bool(true),
-				Layout:            "orthogonal",
-				Orient:            direction,
-				InitialTreeDepth:  2,
-				Leaves: &opts.TreeLeaves{
-					Label: &opts.Label{Show: opts.Bool(true), Position: "top"},
-				},
-			},
-		),
-		charts.WithLabelOpts(opts.Label{Show: opts.Bool(true), Position: "top"}),
-	}
-
 	tree.SetGlobalOptions(globalOpts...)
 	tree.AddSeries("Targets", []opts.TreeData{root}).SetSeriesOptions(seriesOpts...)
 	tree.AddJSFuncStrs(`%MY_ECHARTS%.setOption({"emphasis": {"focus": "descendant"}});`)
