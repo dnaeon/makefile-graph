@@ -58,6 +58,8 @@ const (
 func main() {
 	var relatedOnly, highlight bool
 	var makefile, target, highlightColor, direction, format, theme string
+	var fontSize float64
+	var fontStyle string
 
 	flag.StringVar(&makefile, "makefile", "Makefile", "path to Makefile")
 	flag.StringVar(&target, "target", "", "name of a target")
@@ -67,6 +69,9 @@ func main() {
 	flag.StringVar(&direction, "direction", "TB", "layout direction: TB, BT, LR or RL")
 	flag.StringVar(&format, "format", "dot", "format to use: dot, tsort or echarts")
 	flag.StringVar(&theme, "theme", "default", "echarts theme to use, e.g. white, dark, vintage, etc.")
+	flag.Float64Var(&fontSize, "font-size", 0.0, "echarts font size")
+	flag.StringVar(&fontStyle, "font-style", "normal", "echarts font style, e.g. normal, italic, oblique")
+
 	flag.Parse()
 
 	// What format to print the graph in: Dot representation or topo sort
@@ -161,11 +166,21 @@ func main() {
 					Orient:            direction,
 					InitialTreeDepth:  2,
 					Leaves: &opts.TreeLeaves{
-						Label: &opts.Label{Show: opts.Bool(true), Position: "top"},
+						Label: &opts.Label{
+							Show:      opts.Bool(true),
+							Position:  "top",
+							FontSize:  float32(fontSize),
+							FontStyle: fontStyle,
+						},
 					},
 				},
 			),
-			charts.WithLabelOpts(opts.Label{Show: opts.Bool(true), Position: "top"}),
+			charts.WithLabelOpts(opts.Label{
+				Show:      opts.Bool(true),
+				Position:  "top",
+				FontSize:  float32(fontSize),
+				FontStyle: fontStyle,
+			}),
 		}
 		if err := writeEchartsTree(g, os.Stdout, globalOpts, seriesOpts); err != nil {
 			printErrAndExit(err)
