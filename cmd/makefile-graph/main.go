@@ -341,6 +341,7 @@ func writeEchartsTree(g graph.Graph[string], w io.Writer, globalOpts []charts.Gl
 	tree.AddSeries("Targets", []opts.TreeData{root}).SetSeriesOptions(seriesOpts...)
 	tree.AddJSFuncStrs(`%MY_ECHARTS%.setOption({"emphasis": {"focus": "descendant"}});`)
 	page := components.NewPage()
+	page.SetPageTitle("makefile-graph")
 	page.AddCharts(tree)
 
 	return page.Render(w)
