@@ -82,6 +82,7 @@ func main() {
 
 	// Valid directions
 	directions := []string{"TB", "BT", "LR", "RL"}
+	direction = strings.ToUpper(direction)
 	if !slices.Contains(directions, direction) {
 		printErrAndExit(errInvalidLayoutDirection)
 	}
