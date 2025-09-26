@@ -67,7 +67,7 @@ func TestWithSampleDatabases(t *testing.T) {
 			r := strings.NewReader(tc.db)
 			g, err := p.Parse(r)
 			if !errors.Is(err, tc.wantErr) {
-				t.Errorf("got unexpected error: %s", err)
+				t.Fatalf("got unexpected error: %s", err)
 			}
 
 			gotVs := len(g.GetVertices())

@@ -58,27 +58,64 @@ func New() *Parser {
 	return p
 }
 
+// readLine reads a single line from the given reader and returns it as a string
+func (p *Parser) readLine(r *bufio.Reader) (string, error) {
+	var b strings.Builder
+	for {
+		line, isPrefix, err := r.ReadLine()
+		if err != nil {
+			return "", err
+		}
+		b.Write(line)
+		if !isPrefix {
+			break
+		}
+	}
+
+	return b.String(), nil
+}
+
 // Parse parses the data from the given [io.Reader] line by line and generates a
 // dependency graph for the discovered targets.
 func (p *Parser) Parse(r io.Reader) (graph.Graph[string], error) {
 	g := graph.New[string](graph.KindDirected)
-	scanner := bufio.NewScanner(r)
+	scanner := bufio.NewReader(r)
 
 	// Navigate to the `Files` section
-	for scanner.Scan() {
-		line := scanner.Text()
+	for {
+		line, err := p.readLine(scanner)
+		if errors.Is(err, io.EOF) {
+			break
+		}
+		if err != nil {
+			return nil, err
+		}
 		if line == filesSectionMarker {
 			break
 		}
 	}
 
 	// Parse the targets
-	for scanner.Scan() {
-		line := scanner.Text()
+L:
+	for {
+		line, err := p.readLine(scanner)
+		if errors.Is(err, io.EOF) {
+			break L
+		}
+		if err != nil {
+			return nil, err
+		}
+
 		switch {
 		case line == "# Not a target:":
 			// Skip next line
-			scanner.Scan()
+			_, err := p.readLine(scanner)
+			if errors.Is(err, io.EOF) {
+				break L
+			}
+			if err != nil {
+				return nil, err
+			}
 			continue
 		case strings.Contains(line, " = "), strings.Contains(line, " := "):
 			// Variables
@@ -95,10 +132,6 @@ func (p *Parser) Parse(r io.Reader) (graph.Graph[string], error) {
 				return nil, err
 			}
 		}
-	}
-
-	if err := scanner.Err(); err != nil {
-		return nil, err
 	}
 
 	return g, nil
