@@ -3,7 +3,7 @@ module github.com/dnaeon/makefile-graph
 go 1.23
 
 require (
-	github.com/go-echarts/go-echarts/v2 v2.7.2
+	github.com/go-echarts/go-echarts/v2 v2.7.3
 	gopkg.in/dnaeon/go-graph.v1 v1.0.3
 )
 
